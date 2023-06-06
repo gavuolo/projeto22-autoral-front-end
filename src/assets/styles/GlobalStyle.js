@@ -83,7 +83,7 @@ h5{
 	color: #FFFFFF;
 }
 *{
-	font-family: 'Lexend Deca', sans-serif;
+	font-family: 'Poppins', sans-serif;
 	box-sizing: border-box;
 }
 p, h1, h2, h3, h4{
@@ -100,6 +100,11 @@ h2{
 	font-weight: 700;
 	font-size: 36px;
 	line-height: 45px;
+}
+h5{
+	font-family: 'Geologica', sans-serif;
+	font-size: 60px;
+	color: #059B9A;
 }
 ul{ 
 	font-style: normal;
