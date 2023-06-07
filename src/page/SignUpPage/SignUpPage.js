@@ -3,21 +3,24 @@ import { Logo } from "../../components/Logo";
 import { Input } from "../../components/Form/Input";
 import { Button } from "../../components/Form/Button";
 import { Link } from "react-router-dom";
+import { InputSubmit } from "../../components/Form/InputSubmit";
 
-export default function HomePage() {
+export default function SignUpPage() {
   return (
     <>
       <MidBox>
         <Logo />
-        <Input placeholder="Email" type="Email" text="Email" />
-        <Input placeholder="Senha" type="password" text="Senha" />
+        <InputSubmit text="Tipo de usuário"/>
+        <Input type="Email" text="Email" />
+        <Input type="password" text="Senha" />
+        <Input type="password" text="Confirmar senha" />
         <Warning>
           <p>
-            Ainda não tem conta no HealthOn?{" "}
-            <Link to="/sign-up">CADASTRAR</Link>
+            Já tem uma conta no HealthOn?{' '}
+            <Link to="/">LOGIN</Link>
           </p>
         </Warning>
-        <Button text="Login" />
+        <Button text="Cadastrar" />
       </MidBox>
     </>
   );

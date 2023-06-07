@@ -1,30 +1,42 @@
 import React from "react";
 import styled from "styled-components";
 
-export function Input({ placeholder, type, name, onChange, value }) {
+export function Input({ placeholder, type, name, onChange, value, text }) {
   return (
     <>
-      <InputBox
-        placeholder={placeholder}
-        type={type}
-        name={name}
-        value={value}
-        onChange={onChange}
-      ></InputBox>
+      <FormBox>
+        <p>{text}</p>
+        <InputBox type={type} name={name} value={value} onChange={onChange} />
+      </FormBox>
     </>
   );
 }
-
-const InputBox = styled.input`
+const FormBox = styled.div`
+  /* padding: 15px 0 0; */
+  margin: 10px 0 10px 0;
   width: 50%;
-  height: 12%;
+  display: flex;
+  flex-direction: column;
+  text-align: start;
+  p {
+    width: auto;
+    text-align: start;
+    font-size: 1rem;
+    font-weight: 500;
+  }
+`;
+const InputBox = styled.input`
+  width: auto;
+  height: 38px;
   border-radius: 10px;
-  box-sizing: border-box;
-  padding: 4px 20px 0;
+  border: 2px solid;
+  padding: 4px 17px 0;
   font-size: 18px;
-  font-family: 'Poppins', sans-serif;
-
+  font-family: "Poppins", sans-serif;
+  background-color: rgba(0, 0, 0, 0.05);
   :focus {
+    border: 2px solid;
+    background-color: rgba(0, 0, 0, 0);
     outline: none;
   }
 `;

@@ -2,6 +2,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import GlobalStyle from "./assets/styles/GlobalStyle";
 import styled from 'styled-components';
 import HomePage from "./page/HomePage/HomePage";
+import SignUpPage from "./page/SignUpPage/SignUpPage";
 
 export default function App() {
   return (
@@ -11,6 +12,7 @@ export default function App() {
           <GlobalStyle />
           <Routes>
             <Route path="/" element={<HomePage />} />
+            <Route path="/sign-up" element={<SignUpPage />} />
           </Routes>
         </Content>
       </BrowserRouter>
