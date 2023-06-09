@@ -2,25 +2,29 @@ import styled from "styled-components";
 import { Logo } from "../../components/Logo";
 import { Input } from "../../components/Form/Input";
 import { Button } from "../../components/Form/Button";
-import { Link } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 import useForm from "../../hooks/useForm";
-import React from "react";
+import React, { useContext } from "react";
 import { signIn } from "../../service/signInService";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import UserContext from "../../context/userContext";
 
 export default function HomePage() {
   const [form, handleForm] = useForm({
     email: "",
     password: "",
   });
-
+  const { setUser } = useContext(UserContext)
+  const navigate = useNavigate()
   async function Login(event) {
     event.preventDefault();
-    console.log(form);
     try {
       const response = await signIn(form);
-      return console.log(response);
+      setUser(response);
+      console.log(response)
+      navigate("/dashboard")
+      return
     } catch (error) {
       toast.error(error.response.data, {
         position: "top-left",
