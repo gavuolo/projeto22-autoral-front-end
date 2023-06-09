@@ -3,21 +3,50 @@ import { Logo } from "../../components/Logo";
 import { Input } from "../../components/Form/Input";
 import { Button } from "../../components/Form/Button";
 import { Link } from "react-router-dom";
+import useForm from "../../hooks/useForm";
+import React from "react";
 
 export default function HomePage() {
+  const [form, handleForm] = useForm({
+    email: "",
+    password: "",
+  });
+
+  function login(event) {
+    event.preventDefault();
+    console.log(form);
+  }
+
+
   return (
     <>
       <MidBox>
         <Logo />
-        <Input placeholder="Email" type="Email" text="Email" />
-        <Input placeholder="Senha" type="password" text="Senha" />
+        <Input
+          placeholder="Email"
+          type="Email"
+          text="Email"
+          name="email"
+          value={form.email}
+          onChange={handleForm}
+          required
+        />
+        <Input
+          placeholder="Senha"
+          type="password"
+          text="Senha"
+          name="password"
+          value={form.password}
+          onChange={handleForm}
+          required
+        />
         <Warning>
           <p>
             Ainda não tem conta no HealthOn?{" "}
             <Link to="/sign-up">CADASTRAR</Link>
           </p>
         </Warning>
-        <Button text="Login" />
+        <Button text="Login" onClick={login} />
       </MidBox>
     </>
   );

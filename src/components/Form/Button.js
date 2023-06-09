@@ -1,10 +1,10 @@
 import React, { Children } from "react";
 import styled from "styled-components";
 
-export function Button({text}) {
+export function Button({text, onClick, type}) {
   return (
     <>
-      <ButtonBox><p>{text}</p></ButtonBox>
+      <ButtonBox onClick={onClick} type={type} ><p>{text}</p></ButtonBox>
     </>
   );
 }

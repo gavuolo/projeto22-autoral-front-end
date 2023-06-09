@@ -25,7 +25,6 @@ export function InputSubmit({
   );
 }
 const FormBox = styled.div`
-  /* padding: 15px 0 0; */
   margin: 10px 0 10px 0;
   width: 50%;
   display: flex;
