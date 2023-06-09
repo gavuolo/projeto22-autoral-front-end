@@ -7,7 +7,8 @@ import { InputSubmit } from "../../components/Form/InputSubmit";
 import useForm from "../../hooks/useForm";
 import { signUp } from "../../service/signUpService";
 import { useEffect } from "react";
-import axios from "axios";
+import { ToastContainer, toast } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
 
 export default function SignUpPage() {
   const [form, handleForm] = useForm({
@@ -16,16 +17,65 @@ export default function SignUpPage() {
     confirmPassword: "",
     userType: "",
   });
-  async function Register() {
-    try{
+  async function Register(event) {
+    event.preventDefault();
+    try {
       const response = await signUp(form);
-      return console.log(response)
-    }catch(error){
-      return console.log(error.response.data)
+      return console.log(response);
+    } catch (error) {
+      if (error.response.data.name === "ConflictError") {
+        toast.error(error.response.data.message, {
+          position: "top-left",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
+      }
+      if (error.response.data.name === "DuplicatedEmailError"){
+        toast.error(error.response.data.message, {
+          position: "top-left",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
+      }
+      if (error.response.data.name === "differentPasswordError"){
+        toast.error(error.response.data.message, {
+          position: "top-left",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
+      }
+      return console.log(error.response.data);
     }
- }
+  }
   return (
     <>
+      <ToastContainer
+        position="top-left"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+      />
       <MidBox>
         <Logo />
         <FormBox>

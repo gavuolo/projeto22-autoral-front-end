@@ -5,6 +5,9 @@ import { Button } from "../../components/Form/Button";
 import { Link } from "react-router-dom";
 import useForm from "../../hooks/useForm";
 import React from "react";
+import { signIn } from "../../service/signInService";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export default function HomePage() {
   const [form, handleForm] = useForm({
@@ -12,14 +15,40 @@ export default function HomePage() {
     password: "",
   });
 
-  function login(event) {
+  async function Login(event) {
     event.preventDefault();
     console.log(form);
+    try {
+      const response = await signIn(form);
+      return console.log(response);
+    } catch (error) {
+      toast.error(error.response.data, {
+        position: "top-left",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
+      return console.log(error.response.data);
+    }
   }
-
-
   return (
     <>
+      <ToastContainer
+        position="top-left"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+      />
       <MidBox>
         <Logo />
         <Input
@@ -46,7 +75,7 @@ export default function HomePage() {
             <Link to="/sign-up">CADASTRAR</Link>
           </p>
         </Warning>
-        <Button text="Login" onClick={login} />
+        <Button text="Login" onClick={Login} />
       </MidBox>
     </>
   );
