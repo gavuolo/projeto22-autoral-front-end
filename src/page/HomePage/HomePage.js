@@ -9,24 +9,25 @@ import { signIn } from "../../service/signInService";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import UserContext from "../../context/userContext";
+import { ContainerMidBox, MidBox, Warning } from "../../assets/styles/HomePageStyles";
 
 export default function HomePage() {
   const [form, handleForm] = useForm({
     email: "",
     password: "",
   });
-  const { setUser } = useContext(UserContext)
-  const navigate = useNavigate()
+  const { setUser } = useContext(UserContext);
+  const navigate = useNavigate();
   async function Login(event) {
     event.preventDefault();
     try {
       const response = await signIn(form);
       setUser(response);
-      console.log(response)
-      navigate("/dashboard")
-      return
+      console.log(response);
+      navigate("/dashboard");
+      return;
     } catch (error) {
-      toast.error(error.response.data, {
+      return toast.error(error.response.data, {
         position: "top-left",
         autoClose: 5000,
         hideProgressBar: false,
@@ -36,7 +37,6 @@ export default function HomePage() {
         progress: undefined,
         theme: "light",
       });
-      return console.log(error.response.data);
     }
   }
   return (
@@ -53,7 +53,7 @@ export default function HomePage() {
         pauseOnHover
         theme="light"
       />
-      <MidBox>
+      <ContainerMidBox>
         <Logo />
         <Input
           placeholder="Email"
@@ -80,33 +80,7 @@ export default function HomePage() {
           </p>
         </Warning>
         <Button text="Login" onClick={Login} />
-      </MidBox>
+      </ContainerMidBox>
     </>
   );
 }
-
-const MidBox = styled.div`
-  width: 40%;
-  height: auto;
-  padding: 2%;
-  background-color: white;
-  -webkit-box-shadow: 0px 0px 28px -5px rgba(0, 0, 0, 0.73);
-  -moz-box-shadow: 0px 0px 28px -5px rgba(0, 0, 0, 0.73);
-  box-shadow: 0px 0px 28px -5px rgba(0, 0, 0, 0.73);
-  border-radius: 2%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-`;
-const Warning = styled.div`
-  width: 50%;
-  margin: 10px 0 10px 0;
-  text-align: center;
-  p {
-    font-weight: 300;
-    font-size: 13px;
-  }
-  &Link {
-    font-weight: 800;
-  }
-`;

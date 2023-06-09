@@ -10,7 +10,7 @@ export function Button({text, onClick, type}) {
 }
 
 const ButtonBox = styled.div`
-  width: 20%;
+  width: 100px;
   height: 38px;
   border-radius: 10px;
   background-color: #2478BC;
@@ -25,5 +25,11 @@ const ButtonBox = styled.div`
   }
   :hover{
     background-color: #0C0636;
+  }
+  @media (max-width: 770px) {
+    width: 50%;
+    p{
+      overflow: hidden;
+    }
   }
 `;

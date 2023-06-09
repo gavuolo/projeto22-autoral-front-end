@@ -6,9 +6,11 @@ import { Link } from "react-router-dom";
 import { InputSubmit } from "../../components/Form/InputSubmit";
 import useForm from "../../hooks/useForm";
 import { signUp } from "../../service/signUpService";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
-import 'react-toastify/dist/ReactToastify.css';
+import "react-toastify/dist/ReactToastify.css";
+import { ContainerMidBox, FormBox, Warning } from "../../assets/styles/HomePageStyles";
+import { IoIosEye, IoIosEyeOff } from "react-icons/io";
 
 export default function SignUpPage() {
   const [form, handleForm] = useForm({
@@ -35,7 +37,7 @@ export default function SignUpPage() {
           theme: "light",
         });
       }
-      if (error.response.data.name === "DuplicatedEmailError"){
+      if (error.response.data.name === "DuplicatedEmailError") {
         toast.error(error.response.data.message, {
           position: "top-left",
           autoClose: 5000,
@@ -47,7 +49,7 @@ export default function SignUpPage() {
           theme: "light",
         });
       }
-      if (error.response.data.name === "differentPasswordError"){
+      if (error.response.data.name === "differentPasswordError") {
         toast.error(error.response.data.message, {
           position: "top-left",
           autoClose: 5000,
@@ -76,7 +78,7 @@ export default function SignUpPage() {
         pauseOnHover
         theme="light"
       />
-      <MidBox>
+      <ContainerMidBox>
         <Logo />
         <FormBox>
           <p>Tipo de Usuário</p>
@@ -123,63 +125,8 @@ export default function SignUpPage() {
           </p>
         </Warning>
         <Button text="Cadastrar" type="submit" onClick={Register} />
-      </MidBox>
+      </ContainerMidBox>
     </>
   );
 }
 
-const MidBox = styled.div`
-  width: 40%;
-  height: auto;
-  padding: 2%;
-  background-color: white;
-  -webkit-box-shadow: 0px 0px 28px -5px rgba(0, 0, 0, 0.73);
-  -moz-box-shadow: 0px 0px 28px -5px rgba(0, 0, 0, 0.73);
-  box-shadow: 0px 0px 28px -5px rgba(0, 0, 0, 0.73);
-  border-radius: 2%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-`;
-const FormBox = styled.div`
-  margin: 10px 0 10px 0;
-  width: 50%;
-  display: flex;
-  flex-direction: column;
-  text-align: start;
-  p {
-    width: auto;
-    text-align: start;
-    font-size: 1rem;
-    font-weight: 500;
-  }
-  select {
-    cursor: pointer;
-    width: auto;
-    height: 38px;
-    border-radius: 10px;
-    border: 2px solid;
-    padding: 4px 17px 0;
-    font-size: 18px;
-    font-family: "Poppins", sans-serif;
-    background-color: rgba(0, 0, 0, 0.05);
-    :focus {
-      border: 2px solid;
-      background-color: rgba(0, 0, 0, 0);
-      outline: none;
-      cursor: pointer;
-    }
-  }
-`;
-const Warning = styled.div`
-  width: 50%;
-  margin: 10px 0 10px 0;
-  text-align: center;
-  p {
-    font-weight: 300;
-    font-size: 13px;
-  }
-  &Link {
-    font-weight: 800;
-  }
-`;
