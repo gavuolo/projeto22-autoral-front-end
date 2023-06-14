@@ -1,12 +1,12 @@
 import React from "react";
 import styled from "styled-components";
 
-export function Input({ placeholder, type, name, onChange, value, text }) {
+export function Input({ placeholder, type, name, onChange, value, text , width}) {
   return (
     <>
       <FormBox>
         <p>{text}</p>
-        <InputBox type={type} name={name} value={value} onChange={onChange} />
+        <InputBox placeholder={placeholder} type={type} name={name} value={value} onChange={onChange} width={width}/>
       </FormBox>
     </>
   );
@@ -26,7 +26,7 @@ const FormBox = styled.div`
   }
 `;
 const InputBox = styled.input`
-  width: auto;
+  width: ${props => props.width};
   height: 38px;
   border-radius: 10px;
   border: 2px solid;

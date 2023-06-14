@@ -1,10 +1,10 @@
 import React, { Children } from "react";
 import styled from "styled-components";
 
-export function Button({text, onClick, type}) {
+export function Button({text, onClick, type, disabled}) {
   return (
     <>
-      <ButtonBox onClick={onClick} type={type} ><p>{text}</p></ButtonBox>
+      <ButtonBox onClick={onClick} type={type} disabled={disabled} ><p>{text}</p></ButtonBox>
     </>
   );
 }
@@ -13,7 +13,7 @@ const ButtonBox = styled.div`
   width: 100px;
   height: 38px;
   border-radius: 10px;
-  background-color: #2478BC;
+  background-color: #4A90E2;
   cursor: pointer;
   display: flex;
   align-items: center;
@@ -24,8 +24,8 @@ const ButtonBox = styled.div`
     font-weight: 600;
   }
   :hover{
-    background-color: #0C0636;
-  }
+    background-color: #A6CAED;
+  } 
   @media (max-width: 770px) {
     width: 50%;
     p{

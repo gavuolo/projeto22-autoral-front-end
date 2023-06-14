@@ -2,14 +2,19 @@ import styled from "styled-components";
 import { Logo } from "../../components/Logo";
 import { Input } from "../../components/Form/Input";
 import { Button } from "../../components/Form/Button";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { InputSubmit } from "../../components/Form/InputSubmit";
 import useForm from "../../hooks/useForm";
 import { signUp } from "../../service/signUpService";
 import { useEffect, useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { ContainerMidBox, FormBox, Warning } from "../../assets/styles/HomePageStyles";
+import {
+  Background,
+  ContainerMidBox,
+  FormBox,
+  Warning,
+} from "../../assets/styles/HomePageStyles";
 import { IoIosEye, IoIosEyeOff } from "react-icons/io";
 
 export default function SignUpPage() {
@@ -19,10 +24,24 @@ export default function SignUpPage() {
     confirmPassword: "",
     userType: "",
   });
+  const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
   async function Register(event) {
     event.preventDefault();
     try {
       const response = await signUp(form);
+      setLoading(!false);
+      toast.success("Registrado com sucesso!", {
+        position: "top-left",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
+      setTimeout(() => navigate("/"), 1500);
       return console.log(response);
     } catch (error) {
       if (error.response.data.name === "ConflictError") {
@@ -65,7 +84,7 @@ export default function SignUpPage() {
     }
   }
   return (
-    <>
+    <Background>
       <ToastContainer
         position="top-left"
         autoClose={5000}
@@ -101,6 +120,7 @@ export default function SignUpPage() {
           value={form.email}
           name="email"
           onChange={handleForm}
+          width='auto'
           required
         />
         <Input
@@ -109,6 +129,7 @@ export default function SignUpPage() {
           value={form.password}
           name="password"
           onChange={handleForm}
+          width='auto'
           required
         />
         <Input
@@ -117,6 +138,7 @@ export default function SignUpPage() {
           value={form.confirmPassword}
           name="confirmPassword"
           onChange={handleForm}
+          width='auto'
           required
         />
         <Warning>
@@ -124,9 +146,12 @@ export default function SignUpPage() {
             Já tem uma conta no HealthOn? <Link to="/">LOGIN</Link>
           </p>
         </Warning>
-        <Button text="Cadastrar" type="submit" onClick={Register} />
+        {loading ? (
+          <Button text="Carregando" type="submit" disabled />
+        ) : (
+          <Button text="Cadastrar" type="submit" onClick={Register} />
+        )}
       </ContainerMidBox>
-    </>
+      </Background>
   );
 }
-

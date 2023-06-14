@@ -45,7 +45,7 @@ const FormBox = styled.div`
     padding: 4px 17px 0;
     font-size: 18px;
     font-family: "Poppins", sans-serif;
-    background-color: rgba(0, 0, 0, 0.05);
+    background-color: rgba(	189, 189, 189, 0.05);
     :focus {
       border: 2px solid;
       background-color: rgba(0, 0, 0, 0);

@@ -9,22 +9,32 @@ import { signIn } from "../../service/signInService";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import UserContext from "../../context/userContext";
-import { ContainerMidBox, MidBox, Warning } from "../../assets/styles/HomePageStyles";
+import {
+  Background,
+  ContainerMidBox,
+  MidBox,
+  Warning,
+} from "../../assets/styles/HomePageStyles";
 
 export default function HomePage() {
   const [form, handleForm] = useForm({
     email: "",
     password: "",
   });
-  const { setUser } = useContext(UserContext);
+  const { user, setUser } = useContext(UserContext);
   const navigate = useNavigate();
+  function changePage(userType) {
+    if (userType === "Recepcionista") {
+      navigate('/register/receptionist')
+    }
+    navigate('/register/staff')
+  }
   async function Login(event) {
     event.preventDefault();
     try {
       const response = await signIn(form);
       setUser(response);
-      console.log(response);
-      navigate("/dashboard");
+      changePage(response.userType);
       return;
     } catch (error) {
       return toast.error(error.response.data, {
@@ -41,6 +51,7 @@ export default function HomePage() {
   }
   return (
     <>
+    <Background>
       <ToastContainer
         position="top-left"
         autoClose={5000}
@@ -62,6 +73,7 @@ export default function HomePage() {
           name="email"
           value={form.email}
           onChange={handleForm}
+          width='auto'
           required
         />
         <Input
@@ -71,6 +83,7 @@ export default function HomePage() {
           name="password"
           value={form.password}
           onChange={handleForm}
+          width='auto'
           required
         />
         <Warning>
@@ -79,8 +92,9 @@ export default function HomePage() {
             <Link to="/sign-up">CADASTRAR</Link>
           </p>
         </Warning>
-        <Button text="Login" onClick={Login} />
+        <Button text="Entrar" onClick={Login} />
       </ContainerMidBox>
+      </Background>
     </>
   );
 }
