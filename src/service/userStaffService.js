@@ -10,7 +10,7 @@ export async function specialityRegister(name, token) {
 }
 
 export async function userStaffRegister(form, token) {
-  const response = await api.post("/user", form, {
+  const response = await api.post("/staff/user", form, {
     headers: {
       Authorization: `Bearer ${token}`,
     },

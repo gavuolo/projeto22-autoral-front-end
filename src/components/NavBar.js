@@ -3,10 +3,24 @@ import styled from "styled-components";
 import { IoIosMenu, IoIosContact , IoIosLogOut } from "react-icons/io";
 import logo from "../assets/images/logo.png";
 import UserContext from "../context/userContext";
+import { logOut } from "../service/signInService";
+import { useNavigate } from "react-router-dom";
 
 export function NavBar() {
   const [menu, setMenu] = useState(false);
   const { user, token } = useContext(UserContext);
+  //sair da conta
+  const navigate = useNavigate();
+  async function Logout(event){
+    event.preventDefault();
+    try{
+      const repsonse = await logOut(user.token)
+      console.log("deslogou")
+      return navigate('/')
+    }catch(error){
+      console.log(error)
+    }
+  }
   
   return (
     <>
@@ -27,7 +41,7 @@ export function NavBar() {
         </Menu>
         <UserInfo>
         <IoIosContact onClick={ () => console.log("Cliquei no contato", user)}/>
-        <IoIosLogOut onClick={ () => console.log("Cliquei em sair", user)}/>
+        <IoIosLogOut onClick={Logout}/>
         </UserInfo>
       </TopBar>
     </>
@@ -86,7 +100,6 @@ const Menu = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-around;
-  background-color: yellow;
 `;
 
 const Click = styled.div`
@@ -111,6 +124,5 @@ const UserInfo = styled.div`
   align-items: center;
   justify-content: space-evenly;
   color: white;
-  background-color: aqua;
   font-size: 35px;
 `;
