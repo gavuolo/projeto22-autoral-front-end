@@ -7,14 +7,14 @@ import { logOut } from "../service/signInService";
 import { useNavigate } from "react-router-dom";
 
 export function NavBar() {
-  const [menu, setMenu] = useState(false);
+  const [menu, setMenu] = useState(true);
   const { user, token } = useContext(UserContext);
   //sair da conta
   const navigate = useNavigate();
   async function Logout(event){
     event.preventDefault();
     try{
-      const repsonse = await logOut(user.token)
+      const response = await logOut(user.token)
       console.log("deslogou")
       return navigate('/')
     }catch(error){

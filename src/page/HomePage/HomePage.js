@@ -26,6 +26,7 @@ export default function HomePage() {
   function changePage(userType) {
     if (userType === "Recepcionista") {
       navigate('/register/receptionist')
+      return
     }
     navigate('/register/staff')
   }
