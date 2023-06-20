@@ -1,27 +1,40 @@
 import { useContext, useState } from "react";
 import styled from "styled-components";
-import { IoIosMenu, IoIosContact , IoIosLogOut } from "react-icons/io";
+import { IoIosMenu, IoIosContact, IoIosLogOut } from "react-icons/io";
 import logo from "../assets/images/logo.png";
 import UserContext from "../context/userContext";
 import { logOut } from "../service/signInService";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 export function NavBar() {
   const [menu, setMenu] = useState(true);
-  const { user, token } = useContext(UserContext);
+  const { user, userInfo } = useContext(UserContext);
   //sair da conta
   const navigate = useNavigate();
-  async function Logout(event){
+  async function Logout(event) {
     event.preventDefault();
-    try{
-      const response = await logOut(user.token)
-      console.log("deslogou")
-      return navigate('/')
-    }catch(error){
-      console.log(error)
+    try {
+      await logOut(user.token);
+      console.log("deslogou");
+      toast.success("Até a próxima!", {
+        position: "top-left",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
+      return navigate("/");
+    } catch (error) {
+      console.log(error);
     }
   }
-  
+  async function newMedicalRecord() {
+    return navigate("/register/medical-record");
+  }
   return (
     <>
       <TopBar>
@@ -35,13 +48,18 @@ export function NavBar() {
               <Click menu={menu}>
                 <IoIosMenu onClick={() => setMenu(!menu)} />
               </Click>
-              <LeftBar menu={menu} />
+              <LeftBar menu={menu}>
+                <h4 onClick={newMedicalRecord}>NOVO PRONTUÁRIO</h4>
+              </LeftBar>
             </>
           )}
         </Menu>
         <UserInfo>
-        <IoIosContact onClick={ () => console.log("Cliquei no contato", user)}/>
-        <IoIosLogOut onClick={Logout}/>
+          <IoIosContact
+            onClick={() => console.log("Cliquei no contato", user)}
+          />
+          <p>TESTE</p>
+          <IoIosLogOut onClick={Logout} />
         </UserInfo>
       </TopBar>
     </>

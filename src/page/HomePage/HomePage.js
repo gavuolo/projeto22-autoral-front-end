@@ -1,4 +1,3 @@
-import styled from "styled-components";
 import { Logo } from "../../components/Logo";
 import { Input } from "../../components/Form/Input";
 import { Button } from "../../components/Form/Button";
@@ -53,18 +52,6 @@ export default function HomePage() {
   return (
     <>
     <Background>
-      <ToastContainer
-        position="top-left"
-        autoClose={5000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-        theme="light"
-      />
       <ContainerMidBox>
         <Logo />
         <Input

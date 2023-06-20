@@ -41,8 +41,7 @@ export default function SignUpPage() {
         progress: undefined,
         theme: "light",
       });
-      setTimeout(() => navigate("/"), 1500);
-      return console.log(response);
+      return navigate("/");
     } catch (error) {
       if (error.response.data.name === "ConflictError") {
         toast.error(error.response.data.message, {

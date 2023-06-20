@@ -8,10 +8,23 @@ import Dashboard from "./page/Dashboard";
 import RegisterStaff from "./page/Register/StaffPage";
 import RegisterReceptionist from "./page/Register/ReceptionistPage";
 import { useState } from "react";
-
+import { NewMedicalRecord } from "./page/MedicalRecordPage/NewMedicalRecordPage";
+import { ToastContainer } from "react-toastify";
 export default function App() {
   return (
     <>
+     <ToastContainer
+        position="top-left"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+      />
       <BrowserRouter>
         <Content>
           <GlobalStyle />
@@ -22,6 +35,7 @@ export default function App() {
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/register/staff" element={<RegisterStaff />} />
             <Route path="/register/receptionist" element={<RegisterReceptionist />} />
+            <Route path="/register/medical-record" element={<NewMedicalRecord />} />
           </Routes>
           </UserProvider>
         </Content>

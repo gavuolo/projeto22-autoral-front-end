@@ -160,7 +160,7 @@ export default function RegisterStaff() {
             />
           </ContentInput>
         </FillInput>
-        <Button onClick={Register} />
+        <Button text='Finalizar' onClick={Register} />
       </FormDiv>
     </>
   );

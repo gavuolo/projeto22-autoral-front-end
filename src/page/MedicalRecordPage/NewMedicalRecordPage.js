@@ -1,47 +1,18 @@
 import { useContext } from "react";
+import { ContentInput, FillInput, FixedInput, FormDiv, Info } from "../../assets/styles/RegisterPageStyle";
+import { Input } from "../../components/Form/Input";
 import { NavBar } from "../../components/NavBar";
 import UserContext from "../../context/userContext";
-import {
-  ContentInput,
-  FillInput,
-  FixedInput,
-  FormDiv,
-  Info,
-} from "../../assets/styles/RegisterPageStyle";
-import { Input } from "../../components/Form/Input";
-import { Button } from "../../components/Form/Button";
 import useForm from "../../hooks/useForm";
-import { userRecepcionistRegister } from "../../service/userRecepcionistService";
+import { Button } from "../../components/Form/Button";
 
-export default function RegisterReceptionist() {
+export function NewMedicalRecord() {
   const { user } = useContext(UserContext);
   const [form, handleForm] = useForm({});
-  async function Register(event) {
-    event.preventDefault();
-    try {
-      const date = form.birthday;
-      const part = date.split("-");
-      let convertedDate = part[2] + "-" + part[1] + "-" + part[0];
-      convertedDate = convertedDate.replace(/-/g, "/");
-      console.log(convertedDate);
-      const body = {
-        name: form.name,
-        socialName: form.socialName,
-        cpf: form.cpf,
-        phone: form.phone,
-        gender: form.gender,
-        birthday: convertedDate,
-      };
-      const response = await userRecepcionistRegister(body, user.token);
-      return console.log(response);
-    } catch (error) {
-      return console.log(error.response.data);
-    }
-  }
   return (
     <>
-      <NavBar />
-      <FormDiv>
+    <NavBar />
+    <FormDiv>
         <Info>
           <h2>Termine seu cadastro.</h2>
         </Info>
@@ -103,11 +74,65 @@ export default function RegisterReceptionist() {
               value={form.birthday}
               onChange={handleForm}
               width="40%"
+              required="true"
+            />
+            <Input
+              text="Estado civil"
+              type="text"
+              name="maritalStatus"
+              value={form.maritalStatus}
+              onChange={handleForm}
+              width="40%"
+              required="false"
+            />
+             <Input
+              text="Local de nascimento"
+              type="text"
+              name="birthPlace"
+              value={form.birthPlace}
+              onChange={handleForm}
+              width="40%"
+              required="true"
+            />
+            <Input
+              text="Nacionalidade"
+              type="text"
+              name="nationality"
+              value={form.nationality}
+              onChange={handleForm}
+              width="40%"
+              required="true"
+            />
+            <Input
+              text="E-mail"
+              type="text"
+              name="email"
+              value={form.email}
+              onChange={handleForm}
+              width="40%"
+              required="true"
+            />
+            <Input
+              text="Escolaridade"
+              type="text"
+              name="schooling"
+              value={form.schooling}
+              onChange={handleForm}
+              width="40%"
+              required="true"
+            />
+            <Input
+              text="Ocupação"
+              type="text"
+              name="occupation"
+              value={form.occupation}
+              onChange={handleForm}
+              width="40%"
               required="false"
             />
           </ContentInput>
         </FillInput>
-        <Button text='Finalizar' onClick={Register} />
+        <Button text='Finalizar' onClick={() => console.log('cliquei')} />
       </FormDiv>
     </>
   );
