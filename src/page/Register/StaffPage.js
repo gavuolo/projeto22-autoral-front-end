@@ -2,7 +2,7 @@
 import { NavBar } from "../../components/NavBar";
 import { Input } from "../../components/Form/Input";
 import useForm from "../../hooks/useForm";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import UserContext from "../../context/userContext";
 import { useState } from "react";
 import {
@@ -11,15 +11,16 @@ import {
 } from "../../service/userStaffService";
 import { Button } from "../../components/Form/Button";
 import { ContentInput, FillInput, FixedInput, FormDiv, Info } from "../../assets/styles/RegisterPageStyle";
+import { userData } from "../../service/userService";
 
 export default function RegisterStaff() {
-  const { user, token } = useContext(UserContext);
+  const { user, setUser, token } = useContext(UserContext);
   const [form, handleForm] = useForm({});
   async function Register(event) {
     event.preventDefault();
     const name = { name: form.speciality };
     try {
-      const speciality = await specialityRegister(name, user.token);
+      const speciality = await specialityRegister(name, token);
       const specialityId = speciality.id;
       const date = form.birthday;
       const part = date.split("-");
@@ -39,12 +40,23 @@ export default function RegisterStaff() {
         councilState: form.councilState,
         specialityId: specialityId,
       };
-      const response = await userStaffRegister(body, user.token);
+      const response = await userStaffRegister(body, token);
       return console.log(response);
     } catch (error) {
       return console.log(error.response.data);
     }
   }
+  useEffect(()=> {
+    async function addUser(){
+      try{ 
+        const response = await userData(token)
+        setUser(response)
+      }catch(error){
+        console.log(error)
+      }  
+    }
+    addUser()
+  },[])
 
   return (
     <>
@@ -54,8 +66,8 @@ export default function RegisterStaff() {
           <h2>Termine seu cadastro.</h2>
         </Info>
         <FixedInput>
-          <Input text="Email" value={user.email} width="70%" />
-          <Input text="Tipo de usuário" value={user.userType} width="50%" />
+          <Input text="Email" value={user.email} width="70%" readOnly={true}/>
+          <Input text="Tipo de usuário" value={user.userType} width="50%" readOnly={true}/>
         </FixedInput>
         <FillInput>
           <ContentInput>
@@ -66,7 +78,7 @@ export default function RegisterStaff() {
               value={form.name}
               onChange={handleForm}
               width="70%"
-              required='true'
+              required={true}
             />
             <Input
               text="Nome social"
@@ -75,7 +87,7 @@ export default function RegisterStaff() {
               value={form.socialName}
               onChange={handleForm}
               width="50%"
-              required='false'
+              required={false}
             />
             <Input
               text="CPF"
@@ -84,7 +96,7 @@ export default function RegisterStaff() {
               value={form.cpf}
               onChange={handleForm}
               width="40%"
-              required='true'
+              required={true}
             />
             <Input
               text="Telefone"
@@ -93,7 +105,7 @@ export default function RegisterStaff() {
               value={form.phone}
               onChange={handleForm}
               width="40%"
-              required='true'
+              required={true}
             />
             <Input
               text="Gênero"
@@ -102,7 +114,7 @@ export default function RegisterStaff() {
               value={form.gender}
               onChange={handleForm}
               width="40%"
-              required='true'
+              required={true}
             />
             <Input
               text="Data de nascimento"
@@ -111,7 +123,7 @@ export default function RegisterStaff() {
               value={form.birthday}
               onChange={handleForm}
               width="40%"
-              required='false'
+              required={false}
             />
             <Input
               text="Profissão"
@@ -120,7 +132,7 @@ export default function RegisterStaff() {
               value={form.profession}
               onChange={handleForm}
               width="40%"
-              required='true'
+              required={true}
             />
              <Input
               text="Especilidade"
@@ -129,7 +141,7 @@ export default function RegisterStaff() {
               value={form.speciality}
               onChange={handleForm}
               width="40%"
-              required='true'
+              required={true}
             />
             <Input
               text="Conselho"
@@ -138,7 +150,7 @@ export default function RegisterStaff() {
               value={form.council}
               onChange={handleForm}
               width="40%"
-              required='true'
+              required={true}
             />
             <Input
               text="Número no conselho"
@@ -147,7 +159,7 @@ export default function RegisterStaff() {
               value={form.councilRegistration}
               onChange={handleForm}
               width="40%"
-              required='true'
+              required={true}
             />
             <Input
               text="Região do conselho"
@@ -156,7 +168,7 @@ export default function RegisterStaff() {
               value={form.councilState}
               onChange={handleForm}
               width="40%"
-              required='true'
+              required={true}
             />
           </ContentInput>
         </FillInput>

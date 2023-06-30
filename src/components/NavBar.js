@@ -9,13 +9,15 @@ import { toast } from "react-toastify";
 
 export function NavBar() {
   const [menu, setMenu] = useState(true);
-  const { user, userInfo } = useContext(UserContext);
+  const { user, token } = useContext(UserContext);
   //sair da conta
   const navigate = useNavigate();
   async function Logout(event) {
     event.preventDefault();
     try {
-      await logOut(user.token);
+      await logOut(token);
+      localStorage.removeItem('userToken');
+      localStorage.removeItem('userStorage');
       console.log("deslogou");
       toast.success("Até a próxima!", {
         position: "top-left",

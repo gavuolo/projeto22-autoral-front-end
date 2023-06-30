@@ -14,26 +14,29 @@ import {
   MidBox,
   Warning,
 } from "../../assets/styles/HomePageStyles";
+import { userData } from "../../service/userService";
 
 export default function HomePage() {
   const [form, handleForm] = useForm({
     email: "",
     password: "",
   });
-  const { user, setUser } = useContext(UserContext);
+  const { addToken, setUser, token } = useContext(UserContext);
   const navigate = useNavigate();
   function changePage(userType) {
     if (userType === "Recepcionista") {
-      navigate('/register/receptionist')
-      return
+      navigate("/register/receptionist");
+      return;
     }
-    navigate('/register/staff')
+    navigate("/register/staff");
   }
   async function Login(event) {
     event.preventDefault();
     try {
       const response = await signIn(form);
-      setUser(response);
+      addToken(response);
+      const getUser = await userData(response.token)
+      setUser(getUser)
       changePage(response.userType);
       return;
     } catch (error) {
@@ -51,37 +54,37 @@ export default function HomePage() {
   }
   return (
     <>
-    <Background>
-      <ContainerMidBox>
-        <Logo />
-        <Input
-          placeholder="Email"
-          type="Email"
-          text="Email"
-          name="email"
-          value={form.email}
-          onChange={handleForm}
-          width='auto'
-          required
-        />
-        <Input
-          placeholder="Senha"
-          type="password"
-          text="Senha"
-          name="password"
-          value={form.password}
-          onChange={handleForm}
-          width='auto'
-          required
-        />
-        <Warning>
-          <p>
-            Ainda não tem conta no HealthOn?{" "}
-            <Link to="/sign-up">CADASTRAR</Link>
-          </p>
-        </Warning>
-        <Button text="Entrar" onClick={Login} />
-      </ContainerMidBox>
+      <Background>
+        <ContainerMidBox>
+          <Logo />
+          <Input
+            placeholder="Email"
+            type="Email"
+            text="Email"
+            name="email"
+            value={form.email}
+            onChange={handleForm}
+            width="auto"
+            required
+          />
+          <Input
+            placeholder="Senha"
+            type="password"
+            text="Senha"
+            name="password"
+            value={form.password}
+            onChange={handleForm}
+            width="auto"
+            required
+          />
+          <Warning>
+            <p>
+              Ainda não tem conta no HealthOn?{" "}
+              <Link to="/sign-up">CADASTRAR</Link>
+            </p>
+          </Warning>
+          <Button text="Entrar" onClick={Login} />
+        </ContainerMidBox>
       </Background>
     </>
   );

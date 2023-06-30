@@ -10,6 +10,7 @@ export function Input({
   text,
   width,
   required,
+  readOnly,
 }) {
   return (
     <>
@@ -23,6 +24,7 @@ export function Input({
           onChange={onChange}
           width={width}
           required={required}
+          readOnly={readOnly}
         />
       </FormBox>
     </>

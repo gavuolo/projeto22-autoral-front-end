@@ -1,15 +1,25 @@
-import { createContext, useState } from 'react';
+import { createContext, useState } from "react";
 
-import useLocalStorage from '../hooks/useLocalStorage';
+import useLocalStorage from "../hooks/useLocalStorage";
+import { userData } from "../service/userService";
 
 const UserContext = createContext();
 export default UserContext;
 
 export function UserProvider({ children }) {
-//   const [userData, setUserData] = useLocalStorage('userData');
-  const [user, setUser] = useState()
+  const [user, setUser] = useState([]);
+  const tokenLocalStorage = localStorage.getItem("userToken");
+  const [token, setToken] = useState(tokenLocalStorage);
+  
+  function addToken(response) {
+    setToken(response.token);
+    setUser(response);
+    localStorage.setItem("userToken", token);
+    localStorage.setItem("userStorage", user);
+  }
+ 
   return (
-    <UserContext.Provider value={{ user, setUser}}>
+    <UserContext.Provider value={{ user, setUser, token, setToken, addToken }}>
       {children}
     </UserContext.Provider>
   );

@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { NavBar } from "../../components/NavBar";
 import UserContext from "../../context/userContext";
 import {
@@ -12,9 +12,10 @@ import { Input } from "../../components/Form/Input";
 import { Button } from "../../components/Form/Button";
 import useForm from "../../hooks/useForm";
 import { userRecepcionistRegister } from "../../service/userRecepcionistService";
+import { userData } from "../../service/userService";
 
 export default function RegisterReceptionist() {
-  const { user } = useContext(UserContext);
+  const { user, setUser, token } = useContext(UserContext);
   const [form, handleForm] = useForm({});
   async function Register(event) {
     event.preventDefault();
@@ -23,7 +24,6 @@ export default function RegisterReceptionist() {
       const part = date.split("-");
       let convertedDate = part[2] + "-" + part[1] + "-" + part[0];
       convertedDate = convertedDate.replace(/-/g, "/");
-      console.log(convertedDate);
       const body = {
         name: form.name,
         socialName: form.socialName,
@@ -32,12 +32,23 @@ export default function RegisterReceptionist() {
         gender: form.gender,
         birthday: convertedDate,
       };
-      const response = await userRecepcionistRegister(body, user.token);
+      const response = await userRecepcionistRegister(body, token);
       return console.log(response);
     } catch (error) {
       return console.log(error.response.data);
     }
   }
+  useEffect(()=> {
+    async function addUser(){
+      try{ 
+        const response = await userData(token)
+        setUser(response)
+      }catch(error){
+        console.log(error)
+      }  
+    }
+    addUser()
+  },[])
   return (
     <>
       <NavBar />
@@ -46,8 +57,8 @@ export default function RegisterReceptionist() {
           <h2>Termine seu cadastro.</h2>
         </Info>
         <FixedInput>
-          <Input text="Email" value={user.email} width="70%" />
-          <Input text="Tipo de usuário" value={user.userType} width="50%" />
+          <Input text="Email" value={user.email} width="70%" readOnly={true}/>
+          <Input text="Tipo de usuário" value={user.userType} width="50%" readOnly={true}/>
         </FixedInput>
         <FillInput>
           <ContentInput>
@@ -58,7 +69,7 @@ export default function RegisterReceptionist() {
               value={form.name}
               onChange={handleForm}
               width="70%"
-              required="true"
+              required={true}
             />
             <Input
               text="Nome social"
@@ -67,7 +78,7 @@ export default function RegisterReceptionist() {
               value={form.socialName}
               onChange={handleForm}
               width="50%"
-              required="false"
+              required={false}
             />
             <Input
               text="CPF"
@@ -76,7 +87,7 @@ export default function RegisterReceptionist() {
               value={form.cpf}
               onChange={handleForm}
               width="40%"
-              required="true"
+              required={true}
             />
             <Input
               text="Telefone"
@@ -85,7 +96,7 @@ export default function RegisterReceptionist() {
               value={form.phone}
               onChange={handleForm}
               width="40%"
-              required="true"
+              required={true}
             />
             <Input
               text="Gênero"
@@ -94,7 +105,7 @@ export default function RegisterReceptionist() {
               value={form.gender}
               onChange={handleForm}
               width="40%"
-              required="true"
+              required={true}
             />
             <Input
               text="Data de nascimento"
@@ -103,7 +114,7 @@ export default function RegisterReceptionist() {
               value={form.birthday}
               onChange={handleForm}
               width="40%"
-              required="false"
+              required={false}
             />
           </ContentInput>
         </FillInput>
