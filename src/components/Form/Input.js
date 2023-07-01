@@ -58,4 +58,8 @@ const InputBox = styled.input`
     background-color: rgba(0, 0, 0, 0);
     outline: none;
   }
+
+  @media (max-width: 770px) {
+    width: 80%;
+  }
 `;

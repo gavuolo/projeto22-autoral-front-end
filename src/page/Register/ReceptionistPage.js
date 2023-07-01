@@ -7,16 +7,21 @@ import {
   FixedInput,
   FormDiv,
   Info,
+  Submit,
 } from "../../assets/styles/RegisterPageStyle";
 import { Input } from "../../components/Form/Input";
 import { Button } from "../../components/Form/Button";
 import useForm from "../../hooks/useForm";
-import { userRecepcionistRegister } from "../../service/userRecepcionistService";
+import { findRegisterRecepcionist, userRecepcionistRegister } from "../../service/userRecepcionistService";
 import { userData } from "../../service/userService";
+import { findRegisterUserStaff } from "../../service/userStaffService";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 export default function RegisterReceptionist() {
-  const { user, setUser, userStorage } = useContext(UserContext);
+  const { user, setUser, userStorage, setFullUser, setFullStorage } = useContext(UserContext);
   const [form, handleForm] = useForm({});
+  const navigate = useNavigate();
   async function Register(event) {
     event.preventDefault();
     try {
@@ -33,21 +38,44 @@ export default function RegisterReceptionist() {
         birthday: convertedDate,
       };
       const response = await userRecepcionistRegister(body, userStorage.token);
-      return console.log(response);
+       console.log(response);
+       navigate('/dashboard')
+       return
     } catch (error) {
+      toast.error(error.response.data, {
+        position: "top-left",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      })
       return console.log(error.response.data);
     }
   }
   useEffect(()=> {
-    async function addUser(){
+    async function stayLoggedIn(){
       try{ 
         const response = await userData(userStorage.token)
-        setUser(response)
+        return setUser(response)
+      }catch(error){
+        console.log(error)
+      }
+    }
+    async function findRegister(){
+      try{ 
+        const response = await findRegisterRecepcionist(userStorage.token)
+        setFullStorage(response)
+        setFullUser(response)
+        return 
       }catch(error){
         console.log(error)
       }  
     }
-    addUser()
+    findRegister()
+    stayLoggedIn()
   },[])
   return (
     <>
@@ -118,7 +146,9 @@ export default function RegisterReceptionist() {
             />
           </ContentInput>
         </FillInput>
+        <Submit>
         <Button text='Finalizar' onClick={Register} />
+        </Submit>
       </FormDiv>
     </>
   );

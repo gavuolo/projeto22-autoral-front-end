@@ -5,13 +5,12 @@ import { Link, Navigate, useNavigate } from "react-router-dom";
 import useForm from "../../hooks/useForm";
 import React, { useContext } from "react";
 import { signIn } from "../../service/signInService";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import UserContext from "../../context/userContext";
 import {
   Background,
   ContainerMidBox,
-  MidBox,
   Warning,
 } from "../../assets/styles/HomePageStyles";
 import { userData } from "../../service/userService";
@@ -19,43 +18,35 @@ import { findRegisterUserStaff } from "../../service/userStaffService";
 import { findRegisterRecepcionist } from "../../service/userRecepcionistService";
 
 export default function HomePage() {
-  const [form, handleForm] = useForm({
-    email: "",
-    password: "",
-  });
-  const { addToken, setUser, setUserStorage, userStorage, setFullUser } =
+  const [form, handleForm] = useForm({});
+  const { setUser, setUserStorage, userStorage, setFullUser, setFullStorage } =
     useContext(UserContext);
   const navigate = useNavigate();
   async function changePage(userType, token) {
     try {
       if (userType === "Recepcionista") {
-        const userRecepcionistRegister = await findRegisterRecepcionist(
-          token
-        );
-        if(userRecepcionistRegister){
-          setFullUser(userRecepcionistRegister);
-          navigate("/dashboard")
-          return
-        }
+        const userRecepcionistRegister = await findRegisterRecepcionist(token);
+        setFullUser(userRecepcionistRegister);
+        setFullStorage(userRecepcionistRegister);
+        navigate("/dashboard");
+        return;
+      }
+      const userStaffRegistration = await findRegisterUserStaff(token);
+      setFullStorage(userStaffRegistration);
+      setFullUser(userStaffRegistration);
+      navigate("/dashboard");
+      return;
+    } catch (error) {
+      console.log(error);
+      if (userType === "Recepcionista") {
         navigate("/register/receptionist");
         return;
       }
-      const userStaffRegistration = await findRegisterUserStaff(
-        token
-      );
-      if(userStaffRegistration){
-        setFullUser(userStaffRegistration);
-        navigate("/dashboard");
-        return
-      }
       navigate("/register/staff");
-      return
-    } catch (error) {
-      console.log(error);
     }
   }
   async function Login(event) {
-    // event.preventDefault();
+    event.preventDefault();
     try {
       const response = await signIn(form);
       setUserStorage(response);

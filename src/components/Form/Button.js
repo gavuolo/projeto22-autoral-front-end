@@ -27,9 +27,6 @@ const ButtonBox = styled.div`
     background-color: #A6CAED;
   } 
   @media (max-width: 770px) {
-    width: 50%;
-    p{
-      overflow: hidden;
-    }
+    width: 100px;
   }
 `;

@@ -11,11 +11,11 @@ import {
   userStaffRegister,
 } from "../../service/userStaffService";
 import { Button } from "../../components/Form/Button";
-import { ContentInput, FillInput, FixedInput, FormDiv, Info } from "../../assets/styles/RegisterPageStyle";
+import { ContentInput, FillInput, FixedInput, FormDiv, Info, Submit } from "../../assets/styles/RegisterPageStyle";
 import { userData } from "../../service/userService";
 
 export default function RegisterStaff() {
-  const { user, setUser, userStorage, fullUser, setFullUser } = useContext(UserContext);
+  const { user, setUser, userStorage, fullUser, setFullUser, setFullStorage } = useContext(UserContext);
   const [form, handleForm] = useForm({});
   async function Register(event) {
     event.preventDefault();
@@ -41,6 +41,8 @@ export default function RegisterStaff() {
         specialityId: specialityId,
       };
       const response = await userStaffRegister(body, userStorage.token);
+      setFullStorage(response)
+      setFullUser(response)
       return console.log(response);
     } catch (error) {
       return console.log(error.response.data);
@@ -59,7 +61,9 @@ export default function RegisterStaff() {
     async function findRegister(){
       try{ 
         const response = await findRegisterUserStaff(userStorage.token)
-        return setFullUser(response)
+        setFullStorage(response)
+        setFullUser(response)
+        return 
       }catch(error){
         console.log(error)
       }  
@@ -182,7 +186,9 @@ export default function RegisterStaff() {
             />
           </ContentInput>
         </FillInput>
+        <Submit>
         <Button text='Finalizar' onClick={Register} />
+        </Submit>
       </FormDiv>
     </>
   );

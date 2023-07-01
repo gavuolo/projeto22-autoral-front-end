@@ -1,12 +1,15 @@
 import styled from "styled-components";
 export const FormDiv = styled.div`
   width: 74%;
-  height: 100vh;
-  margin-top: 140px;
+  height: auto;
+  margin-top: 100px;
   display: flex;
   align-items: center;
   flex-direction: column;
   padding: 0 5% 0 5%;
+  Button {
+    margin-top: 100px;
+  }
 `;
 export const Info = styled.div`
   width: 100%;
@@ -39,4 +42,8 @@ export const FillInput = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+`;
+
+export const Submit = styled.div`
+  margin-top: 50px;
 `;

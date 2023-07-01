@@ -14,12 +14,8 @@ export function NewMedicalRecord() {
     <NavBar />
     <FormDiv>
         <Info>
-          <h2>Termine seu cadastro.</h2>
+          <h2>Crie um prontuário.</h2>
         </Info>
-        <FixedInput>
-          <Input text="Email" value={user.email} width="70%" />
-          <Input text="Tipo de usuário" value={user.userType} width="50%" />
-        </FixedInput>
         <FillInput>
           <ContentInput>
             <Input
@@ -29,7 +25,7 @@ export function NewMedicalRecord() {
               value={form.name}
               onChange={handleForm}
               width="70%"
-              required="true"
+              required={true}
             />
             <Input
               text="Nome social"
@@ -38,7 +34,7 @@ export function NewMedicalRecord() {
               value={form.socialName}
               onChange={handleForm}
               width="50%"
-              required="false"
+              required={false}
             />
             <Input
               text="CPF"
@@ -47,7 +43,7 @@ export function NewMedicalRecord() {
               value={form.cpf}
               onChange={handleForm}
               width="40%"
-              required="true"
+              required={true}
             />
             <Input
               text="Telefone"
@@ -56,7 +52,7 @@ export function NewMedicalRecord() {
               value={form.phone}
               onChange={handleForm}
               width="40%"
-              required="true"
+              required={true}
             />
             <Input
               text="Gênero"
@@ -65,7 +61,7 @@ export function NewMedicalRecord() {
               value={form.gender}
               onChange={handleForm}
               width="40%"
-              required="true"
+              required={true}
             />
             <Input
               text="Data de nascimento"
@@ -74,7 +70,7 @@ export function NewMedicalRecord() {
               value={form.birthday}
               onChange={handleForm}
               width="40%"
-              required="true"
+              required={true}
             />
             <Input
               text="Estado civil"
@@ -83,7 +79,7 @@ export function NewMedicalRecord() {
               value={form.maritalStatus}
               onChange={handleForm}
               width="40%"
-              required="false"
+              required={false}
             />
              <Input
               text="Local de nascimento"
@@ -92,7 +88,7 @@ export function NewMedicalRecord() {
               value={form.birthPlace}
               onChange={handleForm}
               width="40%"
-              required="true"
+              required={true}
             />
             <Input
               text="Nacionalidade"
@@ -101,7 +97,7 @@ export function NewMedicalRecord() {
               value={form.nationality}
               onChange={handleForm}
               width="40%"
-              required="true"
+              required={true}
             />
             <Input
               text="E-mail"
@@ -110,7 +106,7 @@ export function NewMedicalRecord() {
               value={form.email}
               onChange={handleForm}
               width="40%"
-              required="true"
+              required={true}
             />
             <Input
               text="Escolaridade"
@@ -119,7 +115,7 @@ export function NewMedicalRecord() {
               value={form.schooling}
               onChange={handleForm}
               width="40%"
-              required="true"
+              required={true}
             />
             <Input
               text="Ocupação"
@@ -128,7 +124,7 @@ export function NewMedicalRecord() {
               value={form.occupation}
               onChange={handleForm}
               width="40%"
-              required="false"
+              required={false}
             />
           </ContentInput>
         </FillInput>
