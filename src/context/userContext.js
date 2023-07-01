@@ -8,18 +8,12 @@ export default UserContext;
 
 export function UserProvider({ children }) {
   const [user, setUser] = useState([]);
-  const tokenLocalStorage = localStorage.getItem("userToken");
-  const [token, setToken] = useState(tokenLocalStorage);
-  
-  function addToken(response) {
-    setToken(response.token);
-    setUser(response);
-    localStorage.setItem("userToken", token);
-    localStorage.setItem("userStorage", user);
-  }
+  const [fullUser, setFullUser] = useState(null)
+  const [userStorage, setUserStorage] = useLocalStorage('userData', {});
+
  
   return (
-    <UserContext.Provider value={{ user, setUser, token, setToken, addToken }}>
+    <UserContext.Provider value={{ user, setUser, userStorage, setUserStorage, fullUser, setFullUser }}>
       {children}
     </UserContext.Provider>
   );

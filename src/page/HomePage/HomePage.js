@@ -15,29 +15,53 @@ import {
   Warning,
 } from "../../assets/styles/HomePageStyles";
 import { userData } from "../../service/userService";
+import { findRegisterUserStaff } from "../../service/userStaffService";
+import { findRegisterRecepcionist } from "../../service/userRecepcionistService";
 
 export default function HomePage() {
   const [form, handleForm] = useForm({
     email: "",
     password: "",
   });
-  const { addToken, setUser, token } = useContext(UserContext);
+  const { addToken, setUser, setUserStorage, userStorage, setFullUser } =
+    useContext(UserContext);
   const navigate = useNavigate();
-  function changePage(userType) {
-    if (userType === "Recepcionista") {
-      navigate("/register/receptionist");
-      return;
+  async function changePage(userType, token) {
+    try {
+      if (userType === "Recepcionista") {
+        const userRecepcionistRegister = await findRegisterRecepcionist(
+          token
+        );
+        if(userRecepcionistRegister){
+          setFullUser(userRecepcionistRegister);
+          navigate("/dashboard")
+          return
+        }
+        navigate("/register/receptionist");
+        return;
+      }
+      const userStaffRegistration = await findRegisterUserStaff(
+        token
+      );
+      if(userStaffRegistration){
+        setFullUser(userStaffRegistration);
+        navigate("/dashboard");
+        return
+      }
+      navigate("/register/staff");
+      return
+    } catch (error) {
+      console.log(error);
     }
-    navigate("/register/staff");
   }
   async function Login(event) {
-    event.preventDefault();
+    // event.preventDefault();
     try {
       const response = await signIn(form);
-      addToken(response);
-      const getUser = await userData(response.token)
-      setUser(getUser)
-      changePage(response.userType);
+      setUserStorage(response);
+      const user = await userData(response.token);
+      setUser(user);
+      changePage(response.userType, response.token);
       return;
     } catch (error) {
       return toast.error(error.response.data, {

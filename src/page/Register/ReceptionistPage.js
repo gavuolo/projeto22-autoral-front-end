@@ -15,7 +15,7 @@ import { userRecepcionistRegister } from "../../service/userRecepcionistService"
 import { userData } from "../../service/userService";
 
 export default function RegisterReceptionist() {
-  const { user, setUser, token } = useContext(UserContext);
+  const { user, setUser, userStorage } = useContext(UserContext);
   const [form, handleForm] = useForm({});
   async function Register(event) {
     event.preventDefault();
@@ -32,7 +32,7 @@ export default function RegisterReceptionist() {
         gender: form.gender,
         birthday: convertedDate,
       };
-      const response = await userRecepcionistRegister(body, token);
+      const response = await userRecepcionistRegister(body, userStorage.token);
       return console.log(response);
     } catch (error) {
       return console.log(error.response.data);
@@ -41,7 +41,7 @@ export default function RegisterReceptionist() {
   useEffect(()=> {
     async function addUser(){
       try{ 
-        const response = await userData(token)
+        const response = await userData(userStorage.token)
         setUser(response)
       }catch(error){
         console.log(error)

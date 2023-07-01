@@ -8,3 +8,13 @@ export async function userRecepcionistRegister(form, token) {
     });
     return response.data;
   }
+
+
+  export async function findRegisterRecepcionist(token){
+    const response = await api.get("/user/recepcionist/find", {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    return response.data;
+  }

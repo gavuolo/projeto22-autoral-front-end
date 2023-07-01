@@ -9,16 +9,14 @@ import { toast } from "react-toastify";
 
 export function NavBar() {
   const [menu, setMenu] = useState(true);
-  const { user, token } = useContext(UserContext);
+  const { user, fullUser, userStorage } = useContext(UserContext);
   //sair da conta
   const navigate = useNavigate();
   async function Logout(event) {
     event.preventDefault();
     try {
-      await logOut(token);
-      localStorage.removeItem('userToken');
-      localStorage.removeItem('userStorage');
-      console.log("deslogou");
+      await logOut(userStorage.token);
+      localStorage.removeItem('userData');
       toast.success("Até a próxima!", {
         position: "top-left",
         autoClose: 5000,
@@ -60,7 +58,7 @@ export function NavBar() {
           <IoIosContact
             onClick={() => console.log("Cliquei no contato", user)}
           />
-          <p>TESTE</p>
+          {fullUser? <p>Logado com: {fullUser.name}</p> : <p>Logado com: {userStorage.email}</p> }
           <IoIosLogOut onClick={Logout} />
         </UserInfo>
       </TopBar>

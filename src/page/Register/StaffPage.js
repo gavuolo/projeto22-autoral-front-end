@@ -6,6 +6,7 @@ import { useContext, useEffect } from "react";
 import UserContext from "../../context/userContext";
 import { useState } from "react";
 import {
+  findRegisterUserStaff,
   specialityRegister,
   userStaffRegister,
 } from "../../service/userStaffService";
@@ -14,19 +15,18 @@ import { ContentInput, FillInput, FixedInput, FormDiv, Info } from "../../assets
 import { userData } from "../../service/userService";
 
 export default function RegisterStaff() {
-  const { user, setUser, token } = useContext(UserContext);
+  const { user, setUser, userStorage, fullUser, setFullUser } = useContext(UserContext);
   const [form, handleForm] = useForm({});
   async function Register(event) {
     event.preventDefault();
     const name = { name: form.speciality };
     try {
-      const speciality = await specialityRegister(name, token);
+      const speciality = await specialityRegister(name, userStorage.token);
       const specialityId = speciality.id;
       const date = form.birthday;
       const part = date.split("-");
       let convertedDate = part[2] + "-" + part[1] + "-" + part[0];
       convertedDate = convertedDate.replace(/-/g, "/");
-      console.log(convertedDate);
       const body = {
         name: form.name,
         socialName: form.socialName,
@@ -40,24 +40,34 @@ export default function RegisterStaff() {
         councilState: form.councilState,
         specialityId: specialityId,
       };
-      const response = await userStaffRegister(body, token);
+      const response = await userStaffRegister(body, userStorage.token);
       return console.log(response);
     } catch (error) {
       return console.log(error.response.data);
     }
   }
+
   useEffect(()=> {
-    async function addUser(){
+    async function stayLoggedIn(){
       try{ 
-        const response = await userData(token)
-        setUser(response)
+        const response = await userData(userStorage.token)
+        return setUser(response)
+      }catch(error){
+        console.log(error)
+      }
+    }
+    async function findRegister(){
+      try{ 
+        const response = await findRegisterUserStaff(userStorage.token)
+        return setFullUser(response)
       }catch(error){
         console.log(error)
       }  
     }
-    addUser()
+    findRegister()
+    stayLoggedIn()
   },[])
-
+ 
   return (
     <>
       <NavBar />
@@ -66,8 +76,8 @@ export default function RegisterStaff() {
           <h2>Termine seu cadastro.</h2>
         </Info>
         <FixedInput>
-          <Input text="Email" value={user.email} width="70%" readOnly={true}/>
-          <Input text="Tipo de usuário" value={user.userType} width="50%" readOnly={true}/>
+          <Input text="Email" value={userStorage.email} width="70%" readOnly={true}/>
+          <Input text="Tipo de usuário" value={userStorage.userType} width="50%" readOnly={true}/>
         </FixedInput>
         <FillInput>
           <ContentInput>
