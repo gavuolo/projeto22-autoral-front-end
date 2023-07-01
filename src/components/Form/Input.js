@@ -14,7 +14,7 @@ export function Input({
 }) {
   return (
     <>
-      <FormBox>
+      <FormBox width={width}>
         <p>{text}</p>
         <InputBox
           placeholder={placeholder}
@@ -22,7 +22,6 @@ export function Input({
           name={name}
           value={value}
           onChange={onChange}
-          width={width}
           required={required}
           readOnly={readOnly}
         />
@@ -32,8 +31,8 @@ export function Input({
 }
 const FormBox = styled.div`
   /* padding: 15px 0 0; */
-  margin: 10px 0 10px 0;
-  width: 50%;
+  margin: 10px 20px 10px 0px;
+  width: ${(props) => props.width};
   display: flex;
   flex-direction: column;
   text-align: start;
@@ -43,9 +42,12 @@ const FormBox = styled.div`
     font-size: 1rem;
     font-weight: 500;
   }
+  @media (max-width: 770px) {
+    width: ${(props) => props.width};
+  }
 `;
 const InputBox = styled.input`
-  width: ${(props) => props.width};
+  width: auto;
   height: 38px;
   border-radius: 10px;
   border: 2px solid;
@@ -60,6 +62,6 @@ const InputBox = styled.input`
   }
 
   @media (max-width: 770px) {
-    width: 80%;
+    width: 100%;
   }
 `;

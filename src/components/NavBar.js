@@ -5,6 +5,7 @@ import {
   IoMdContact,
   IoIosLogOut,
   IoMdPersonAdd,
+  IoMdListBox,
 } from "react-icons/io";
 import logo from "../assets/images/logo.png";
 import UserContext from "../context/userContext";
@@ -52,10 +53,14 @@ export function NavBar() {
               </Click>
               <LeftBar menu={menu}>
                 <Options>
-                  <NewRecord onClick={newMedicalRecord}>
+                  <Option onClick={() => navigate("/medical-record/list")}>
+                    <IoMdListBox />
+                    <p>PRONTUÁRIOS</p>
+                  </Option>
+                  <Option onClick={() => navigate("/register/medical-record")}>
                     <IoMdPersonAdd />
                     <p>NOVO PRONTUÁRIO</p>
-                  </NewRecord>
+                  </Option>
                 </Options>
               </LeftBar>
             </>
@@ -64,7 +69,7 @@ export function NavBar() {
         <UserInfo>
           <Contact>
             <IoMdContact
-              onClick={() => console.log("Cliquei no contato", user)}
+              onClick={() => navigate("/dashboard")}
             />
           </Contact>
 
@@ -184,7 +189,23 @@ const Options = styled.div`
   justify-content: center;
   flex-direction: column;
 `;
-const NewRecord = styled.div`
+const Exit = styled.div`
+  padding: 5%;
+  cursor: pointer;
+  :hover {
+    color: white;
+    /* #095169 */
+  }
+`;
+const Contact = styled.div`
+  padding: 5%;
+  cursor: pointer;
+  :hover {
+    color: white;
+    /* #095169 */
+  }
+`;
+const Option = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
@@ -199,20 +220,9 @@ const NewRecord = styled.div`
     background-color: #095169;
     color: white;
     border-radius: 3px;
-    p{
+    p {
       color: white;
     }
   }
   cursor: pointer;
-`;
-const Exit = styled.div`
-  padding: 5%;
-  cursor: pointer;
-  :hover {
-    color: white;
-    /* #095169 */
-  }
-`;
-const Contact = styled.div`
-  padding: 5%;
 `;

@@ -10,6 +10,7 @@ import RegisterReceptionist from "./page/Register/ReceptionistPage";
 import { useState } from "react";
 import { NewMedicalRecord } from "./page/MedicalRecordPage/NewMedicalRecordPage";
 import { ToastContainer } from "react-toastify";
+import { ListMedicalRecordPage } from "./page/MedicalRecordPage/ListMedicalRecordPage";
 export default function App() {
   return (
     <>
@@ -36,6 +37,7 @@ export default function App() {
             <Route path="/register/staff" element={<RegisterStaff />} />
             <Route path="/register/receptionist" element={<RegisterReceptionist />} />
             <Route path="/register/medical-record" element={<NewMedicalRecord />} />
+            <Route path="/medical-record/list" element={<ListMedicalRecordPage />} />
           </Routes>
           </UserProvider>
         </Content>

@@ -33,7 +33,7 @@ export function NewMedicalRecord() {
               name="socialName"
               value={form.socialName}
               onChange={handleForm}
-              width="50%"
+              width="30%"
               required={false}
             />
             <Input

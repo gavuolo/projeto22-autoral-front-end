@@ -20,6 +20,7 @@ export const Info = styled.div`
 `;
 export const ContentInput = styled.div`
   display: flex;
+  justify-content: start;
   flex-wrap: wrap;
   width: 100%;
   //tirar o arrow do input number
