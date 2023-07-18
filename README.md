@@ -1,10 +1,16 @@
 # projeto22-autoral-back-end
 
 Este é o repositório para a aplicação de Prontuário Eletrônico e Registro de Histórico de Pacientes, chamado inicialmente de HealthOn. Esta aplicação tem como objetivo fornecer uma plataforma para o registro e gerenciamento de prontuários eletrônicos de pacientes, bem como o acompanhamento de histórico de consultas, observações importantes e detalhes relevantes. A aplicação foi desenvolvida com a possibilidade de evolução, permitindo a adição de novas funcionalidades no futuro.
+* Repositório back-end: https://github.com/gavuolo/projeto22-autoral-back-end/
 <div align="center"> 
   <img src="https://github.com/gavuolo/projeto22-autoral-front-end/assets/100167141/64ab454c-f144-4a74-94d8-845b9d849e8c" width="400px" />
 </div>
 
+---
+<h4>📂 Documentação da API</h4>
+<li>https://www.notion.so/Projeto-Autoral-HealthOn-46ca573a8a664f348724913bccb8d408?pvs=4</li>
+
+---
 <h2>Funcionalidades</h2>
 <li> Registro de funcionários e profissionais de saúde: Permite o cadastro e gerenciamento de informações sobre funcionários e profissionais de saúde relacionados ao local de atendimento, incluindo nome, função, especialidade e dados de contato;</li>
 <li> Adição de prontuário: Permite a criação e atualização de prontuários eletrônicos para pacientes registrados. Isso inclui informações médicas detalhadas, diagnósticos, prescrições e quaisquer outras notas relevantes;</li>
